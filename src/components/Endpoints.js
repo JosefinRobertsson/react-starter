@@ -74,7 +74,7 @@ const Endpoints = () => {
 
   return (
     <>
-      <h3>Endpoints and documentation for the TopMusicData API:</h3>
+      <h3>Endpoints for the TopMusicData API:</h3>
       <ul>
         <li>
           <button type="button" onClick={() => handleEndpointClick('dataset')}>
