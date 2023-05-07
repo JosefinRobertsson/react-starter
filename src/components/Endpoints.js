@@ -1,6 +1,17 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+
+const Datacontainer = styled.div`
+flex-grow: 1;
+background-color: lightcyan;
+overflow: scroll;
+overflow-x: hidden;
+@media screen and (min-width: px) {
+  height: 20%;
+}
+`
 
 const BASE_URL = 'https://project-express-api-j2mriozkda-lz.a.run.app';
 
@@ -63,7 +74,7 @@ const Endpoints = () => {
 
   return (
     <>
-      <h3>Here are the endpoints for the TopMusicData API:</h3>
+      <h3>Endpoints and documentation for the TopMusicData API:</h3>
       <ul>
         <li>
           <button type="button" onClick={() => handleEndpointClick('dataset')}>
@@ -101,13 +112,18 @@ const Endpoints = () => {
           {endpoint === 'songlist/single' && <><h4>Available parameters for the songlist/single endpoint:</h4><p>songname: type in a songname and see if it&apos;s in the top 50</p></>}
           {endpoint === 'songlist/sort' && <><h4>Available parameters for the songlist/sort endpoint:</h4><p>popularity and danceability</p></>}
           {endpoint === 'songlist/top10' && <><h4>Available parameters for the songlist/top10 endpoint:</h4><p>bpm, energy, danceability, loudness, liveness, valence, length, acousticness, speechiness, popularity</p></>}
-          <form onSubmit={handleParamsSubmit}>
-            <label htmlFor="params-input">Enter parameter: </label>
-            <input id="params-input" type="text" defaultValue={paramsRef.current.replace('/', '')} onChange={handleParamsChange} />
-            <button type="submit">Fetch data</button>
-          </form>
+          {['dataset', 'genres', 'songlist/single', 'songlist/sort', 'songlist/top10'].includes(endpoint) && (
+            <form onSubmit={handleParamsSubmit}>
+              <label htmlFor="params-input">Enter parameter: </label>
+              <input id="params-input" type="text" defaultValue={paramsRef.current.replace('/', '')} onChange={handleParamsChange} />
+              <button type="submit">Fetch data</button>
+            </form>
+          )}
+
           <p>Fetching data from: {`${BASE_URL}/${endpoint}${displayParams}`}</p>
-          <pre>{JSON.stringify(musicData, null, 2)}</pre>
+          <Datacontainer>
+            <pre>{JSON.stringify(musicData, null, 2)}</pre>
+          </Datacontainer>
         </>
       )}
     </>
